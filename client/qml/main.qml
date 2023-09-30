@@ -24,6 +24,8 @@ Window {
         }
     }
 
+    //TODO: Use states
+
     Label {
         anchors.centerIn: parent
         text: "Server replica state: " + server.state + ", channel: " + server.clientChannel
