@@ -1,4 +1,10 @@
+class ClientChannelRemoteObject
+{
+    PROP(QString clientName SOURCEONLYSETTER);
+}
+
 class ServerRemoteObject
 {
-    PROP(QString message)
+    PROP(QString clientChannelPrefix = "clientChannel_" SOURCEONLYSETTER);
+    SLOT(QString createClientChannel(QString clientName));
 }

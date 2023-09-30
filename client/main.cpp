@@ -13,20 +13,8 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
 
-    QRemoteObjectNode repNode;
-    if(!repNode.connectToNode(QUrl{ QStringLiteral("local:server") }))
-    {
-        qFatal("Cannot connect to the server");
-    }
-
-    QSharedPointer<ServerReplica> server;
-    server.reset(repNode.acquire<ServerReplica>());
-
-    if(!server->waitForSource(1000))
-    {
-        qFatal("Cannot connect to the server");
-    }
-    qDebug() << "Message from server: " << server->message();
+    // Register qml types
+    qmlRegisterType<ServerReplica>("custom", 1, 0, "ServerReplica");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));

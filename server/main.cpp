@@ -9,11 +9,11 @@ int main(int argc, char *argv[])
 
     QCoreApplication a(argc, argv);
 
-    QRemoteObjectHost hostNode{ QUrl{ QStringLiteral("local:server") } };
+    QRemoteObjectRegistryHost regNode(QUrl(QStringLiteral("local:registry")));
+    QRemoteObjectHost hostNode(QUrl(QStringLiteral("local:replica")), QUrl(QStringLiteral("local:registry")));
 
     ServerSource server;
     hostNode.enableRemoting(&server);
-    server.setMessage("Hello World!");
 
     qDebug() << "Server started.";
 
