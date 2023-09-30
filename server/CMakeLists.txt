@@ -1,5 +1,6 @@
 
 add_executable(server
+    server_source.h server_source.cpp
     main.cpp
 )
 
