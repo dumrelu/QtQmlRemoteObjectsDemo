@@ -4,6 +4,7 @@
 
 #include "rep_server_replica.h"
 
+/// @brief Server replica + convenience methods
 class ServerReplica : public ServerRemoteObjectReplica
 {
     Q_OBJECT

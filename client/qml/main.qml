@@ -122,6 +122,11 @@ Window {
         id: votingComponent
 
         Item {
+            Label {
+                anchors.right: parent.right
+                text: qsTr("Username: %1").arg(server.clientName)
+            }
+
             ColumnLayout {
                 anchors.centerIn: parent
 
