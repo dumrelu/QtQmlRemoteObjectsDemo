@@ -1,8 +1,7 @@
 class ClientChannelRemoteObject
 {
     PROP(QString clientName SOURCEONLYSETTER);
-    PROP(QString lastVoteSelection SOURCEONLYSETTER);
-    PROP(QString lastVotePrompt SOURCEONLYSETTER);
+    PROP(QString voteSelection);
 }
 
 class VotingChannelRemoteObject

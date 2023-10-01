@@ -4,6 +4,7 @@
 
 #include <memory>
 
+#include "client_channel_source.h"
 #include "rep_server_source.h"
 
 class ServerSource : public ServerRemoteObjectSimpleSource
@@ -18,6 +19,6 @@ private:
     QString clientChannelName(QString clientName) const;
 
     QRemoteObjectHost& m_host;
-    QHash<QString, std::shared_ptr<ClientChannelRemoteObjectSimpleSource>> m_clientChannels;
+    QHash<QString, std::shared_ptr<ClientChannelSource>> m_clientChannels;
     VotingChannelRemoteObjectSimpleSource m_votingChannel;
 };

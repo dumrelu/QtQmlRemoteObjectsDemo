@@ -1,6 +1,8 @@
 #include "client_channel_source.h"
 
-ClientChannel::ClientChannel(QObject* parent)
+#include "server_source.h"
+
+ClientChannelSource::ClientChannelSource(QObject* parent)
     : ClientChannelRemoteObjectSimpleSource{ parent }
 {
 }

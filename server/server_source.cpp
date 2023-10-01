@@ -5,6 +5,8 @@ ServerSource::ServerSource(QRemoteObjectHost& host, QObject* parent)
     , m_host{ host }
 {
     setVotingChannel(&m_votingChannel);
+
+    m_votingChannel.setPrompt("Is this working?");
 }
 
 QString ServerSource::createClientChannel(QString clientName)
@@ -18,7 +20,7 @@ QString ServerSource::createClientChannel(QString clientName)
         return channelName;
     }
 
-    auto channel = std::make_shared<ClientChannelRemoteObjectSimpleSource>();
+    auto channel = std::make_shared<ClientChannelSource>();
     channel->setClientName(clientName);
     m_clientChannels.insert(clientName, channel);
 

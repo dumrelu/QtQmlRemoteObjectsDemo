@@ -47,10 +47,18 @@ Window {
             }, 
             State {
                 name: "connectedToServer"
-                when: server.state === ServerReplica.Valid && !!server.clientChannel
+                when: server.state === ServerReplica.Valid && !!server.clientChannel && server.votingChannel.prompt.length === 0
                 PropertyChanges {
                     target: contentLoader
                     sourceComponent: connectedToServerComponent
+                }
+            }, 
+            State {
+                name: "voting"
+                when: server.state === ServerReplica.Valid && !!server.clientChannel && server.votingChannel.prompt.length > 0
+                PropertyChanges {
+                    target: contentLoader
+                    sourceComponent: votingComponent
                 }
             }
         ]   
@@ -104,11 +112,64 @@ Window {
                 anchors.centerIn: parent
 
                 Label {
-                    text: qsTr("Connected to server as: %1").arg(server.clientName)
+                    text: qsTr("Connected to server as: %1. Waiting for a vote...").arg(server.clientName)
                 }
+            }
+        }
+    }
+
+    Component {
+        id: votingComponent
+
+        Item {
+            ColumnLayout {
+                anchors.centerIn: parent
 
                 Label {
-                    text: "Prompt: " + server.votingChannel.prompt
+                    text: server.votingChannel.prompt
+                    font.pixelSize: Qt.application.font.pixelSize * 2
+                    font.bold: true
+                }
+
+                RowLayout {
+                    Layout.alignment: Qt.AlignHCenter
+                    Button {
+                        id: yesButton
+
+                        text: "Yes"
+                        highlighted: server.clientChannel.voteSelection.length > 0
+                        visible: server.clientChannel.voteSelection.length === 0 || server.clientChannel.voteSelection === yesButton.text
+
+                        onClicked: () => {
+                            if(server.clientChannel.voteSelection.length === 0)
+                            {
+                                server.clientChannel.pushVoteSelection(yesButton.text);
+                            }
+                            else
+                            {
+                                server.clientChannel.pushVoteSelection("");
+                            }
+                        }
+                    }
+
+                    Button {
+                        id: noButton
+
+                        text: "No"
+                        highlighted: server.clientChannel.voteSelection.length > 0
+                        visible: server.clientChannel.voteSelection.length === 0 || server.clientChannel.voteSelection === noButton.text
+
+                        onClicked: () => {
+                            if(server.clientChannel.voteSelection.length === 0)
+                            {
+                                server.clientChannel.pushVoteSelection(noButton.text);
+                            }
+                            else
+                            {
+                                server.clientChannel.pushVoteSelection("");
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -2,9 +2,11 @@
 
 #include "rep_server_source.h"
 
-class ClientChannel : public ClientChannelRemoteObjectSimpleSource
+class ServerSource;
+
+class ClientChannelSource : public ClientChannelRemoteObjectSimpleSource
 {
     Q_OBJECT
 public:
-    ClientChannel(QObject* parent = nullptr);
+    ClientChannelSource(QObject* parent = nullptr);
 };
