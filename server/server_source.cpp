@@ -4,6 +4,7 @@ ServerSource::ServerSource(QRemoteObjectHost& host, QObject* parent)
     : ServerRemoteObjectSimpleSource{ parent }
     , m_host{ host }
 {
+    setVotingChannel(&m_votingChannel);
 }
 
 QString ServerSource::createClientChannel(QString clientName)
@@ -26,7 +27,6 @@ QString ServerSource::createClientChannel(QString clientName)
         qCritical() << "Failed to enable remoting for" << clientName;
         return "Failed to enable remoting for client channel" + channelName;
     }
-
     qDebug() << "Communication channel" << channelName << "created for" << clientName;
     return channelName;
 }

@@ -80,6 +80,7 @@ Window {
                 anchors.centerIn: parent
 
                 Label {
+                    focus: true
                     text: qsTr("Username:")
                 }
 
@@ -104,6 +105,10 @@ Window {
 
                 Label {
                     text: qsTr("Connected to server as: %1").arg(server.clientName)
+                }
+
+                Label {
+                    text: "Prompt: " + server.votingChannel.prompt
                 }
             }
         }

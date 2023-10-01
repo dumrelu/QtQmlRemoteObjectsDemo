@@ -19,4 +19,5 @@ private:
 
     QRemoteObjectHost& m_host;
     QHash<QString, std::shared_ptr<ClientChannelRemoteObjectSimpleSource>> m_clientChannels;
+    VotingChannelRemoteObjectSimpleSource m_votingChannel;
 };

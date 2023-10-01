@@ -1,10 +1,19 @@
 class ClientChannelRemoteObject
 {
     PROP(QString clientName SOURCEONLYSETTER);
+    PROP(QString lastVoteSelection SOURCEONLYSETTER);
+    PROP(QString lastVotePrompt SOURCEONLYSETTER);
+}
+
+class VotingChannelRemoteObject
+{
+    PROP(bool votingInProgress = false SOURCEONLYSETTER);
+    PROP(QString prompt SOURCEONLYSETTER);
 }
 
 class ServerRemoteObject
 {
     PROP(QString clientChannelPrefix = "clientChannel_" SOURCEONLYSETTER);
     SLOT(QString createClientChannel(QString clientName));
+    CLASS votingChannel(VotingChannelRemoteObject);
 }
