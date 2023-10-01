@@ -17,6 +17,7 @@ public:
 
 private:
     QString clientChannelName(QString clientName) const;
+    void clientDisconnected(ClientChannelSource* clientChannel);
 
     QRemoteObjectHost& m_host;
     QHash<QString, std::shared_ptr<ClientChannelSource>> m_clientChannels;

@@ -17,11 +17,14 @@ QString ServerSource::createClientChannel(QString clientName)
     {
         //TODO: This should probably be an error. Need to check if the channel is actually used
         qWarning() << "Channel already exists for" << clientName;
-        return channelName;
+        return "ERROR: Client already exists";
     }
 
     auto channel = std::make_shared<ClientChannelSource>();
+    connect(channel.get(), &ClientChannelSource::clientDisconnected, this, &ServerSource::clientDisconnected);
+    
     channel->setClientName(clientName);
+    
     m_clientChannels.insert(clientName, channel);
 
     if(!m_host.enableRemoting(channel.get(), channelName))
@@ -36,4 +39,12 @@ QString ServerSource::createClientChannel(QString clientName)
 QString ServerSource::clientChannelName(QString clientName) const
 {
     return clientChannelPrefix() + clientName;
+}
+
+void ServerSource::clientDisconnected(ClientChannelSource *clientChannel)
+{
+    Q_ASSERT(clientChannel);
+    
+    qDebug() << "Client" << clientChannel->clientName() << "disconnected";
+    m_clientChannels.remove(clientChannel->clientName());
 }

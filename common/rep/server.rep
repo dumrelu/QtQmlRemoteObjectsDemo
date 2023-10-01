@@ -2,6 +2,8 @@ class ClientChannelRemoteObject
 {
     PROP(QString clientName SOURCEONLYSETTER);
     PROP(QString voteSelection);
+    SIGNAL(ping());
+    SLOT(pong());
 }
 
 class VotingChannelRemoteObject

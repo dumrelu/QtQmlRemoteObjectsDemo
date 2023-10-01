@@ -51,6 +51,10 @@ ClientChannelRemoteObjectReplica* ServerReplica::clientChannel()
                 }
 
                 m_clientChannel.reset(node()->acquire<ClientChannelRemoteObjectReplica>(channelName));
+                connect(m_clientChannel.get(), &ClientChannelRemoteObjectReplica::ping, 
+                    m_clientChannel.get(), &ClientChannelRemoteObjectReplica::pong
+                );
+                m_clientChannel->pong();
                 emit clientChannelChanged();
             }, 
             Qt::QueuedConnection
