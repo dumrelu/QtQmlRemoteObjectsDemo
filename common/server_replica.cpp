@@ -12,7 +12,13 @@ ClientChannelRemoteObjectReplica* ServerReplica::clientChannel()
 
     if(state() != QRemoteObjectReplica::Valid)
     {
-        qCritical() << "Server not connected";
+        qWarning() << "Server not connected";
+        return nullptr;
+    }
+
+    if(m_clientName.isEmpty())
+    {
+        qWarning() << "Client name not set";
         return nullptr;
     }
 
