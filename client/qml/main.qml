@@ -171,6 +171,12 @@ Window {
                         }
                     }
                 }
+
+                Label {
+                    text: qsTr("Votes: %1% yes, %2% no, %3% abstain").arg(server.votingChannel.percentageOfYesVotes * 100.0).arg(server.votingChannel.percentageOfNoVotes * 100.0).arg( (1.0 - server.votingChannel.percentageOfYesVotes - server.votingChannel.percentageOfNoVotes) * 100.0)
+                    font.pixelSize: Qt.application.font.pixelSize * 2
+                    font.bold: true
+                }
             }
         }
     }

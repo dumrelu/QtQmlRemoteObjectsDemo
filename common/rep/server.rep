@@ -10,6 +10,8 @@ class VotingChannelRemoteObject
 {
     PROP(bool votingInProgress = false SOURCEONLYSETTER);
     PROP(QString prompt SOURCEONLYSETTER);
+    PROP(double percentageOfYesVotes SOURCEONLYSETTER);
+    PROP(double percentageOfNoVotes SOURCEONLYSETTER);
 }
 
 class ServerRemoteObject
