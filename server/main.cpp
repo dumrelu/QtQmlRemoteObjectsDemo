@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     QRemoteObjectRegistryHost regNode(QUrl(QStringLiteral("local:registry")));
     QRemoteObjectHost hostNode(QUrl(QStringLiteral("local:replica")), QUrl(QStringLiteral("local:registry")));
 
-    ServerSource server;
+    ServerSource server{ hostNode };
     hostNode.enableRemoting(&server);
 
     qDebug() << "Server started.";

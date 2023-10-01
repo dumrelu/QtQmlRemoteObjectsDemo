@@ -1,15 +1,6 @@
 #include "server_replica.h"
 
 
-ServerReplica::~ServerReplica()
-{
-    if(m_clientChannel)
-    {
-        m_clientChannel->deleteLater();
-        m_clientChannel = nullptr;
-    }
-}
-
 QString ServerReplica::clientName() const
 {
     return m_clientName;
@@ -31,6 +22,11 @@ ClientChannelRemoteObjectReplica* ServerReplica::clientChannel()
         QMetaObject::invokeMethod(
             this, [this]()
             {
+                // It is possible to have multiple calls to this lambda in the queue, so make sure
+                //we don't recreate this more times than necessary
+                if(m_clientChannel)
+                    return;
+
                 auto channelNameReply = createClientChannel(m_clientName);
                 if(!channelNameReply.waitForFinished(1000))
                 {
@@ -48,14 +44,14 @@ ClientChannelRemoteObjectReplica* ServerReplica::clientChannel()
                     return;
                 }
 
-                m_clientChannel = node()->acquire<ClientChannelRemoteObjectReplica>(channelName);
+                m_clientChannel.reset(node()->acquire<ClientChannelRemoteObjectReplica>(channelName));
                 emit clientChannelChanged();
             }, 
             Qt::QueuedConnection
         );
     }
 
-    return m_clientChannel;
+    return m_clientChannel.get();
 }
 
 void ServerReplica::setClientName(QString clientName)
@@ -82,11 +78,7 @@ void ServerReplica::connectSignals()
         {
             if(state == QRemoteObjectReplica::Valid)
             {
-                if(m_clientChannel)
-                {
-                    m_clientChannel->deleteLater();
-                    m_clientChannel = nullptr;
-                }
+                m_clientChannel.reset();
                 emit clientChannelChanged();
             }
         }

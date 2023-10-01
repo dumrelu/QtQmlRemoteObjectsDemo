@@ -28,6 +28,6 @@ Window {
 
     Label {
         anchors.centerIn: parent
-        text: "Server replica state: " + server.state + ", channel: " + server.clientChannel
+        text: "Server replica state: " + server.state + ", channel: " + (server.clientChannel ? server.clientChannel.clientName : "null")
     }
 }

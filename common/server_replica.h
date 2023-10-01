@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "rep_server_replica.h"
 
 class ServerReplica : public ServerRemoteObjectReplica
@@ -10,8 +12,6 @@ class ServerReplica : public ServerRemoteObjectReplica
     Q_PROPERTY(ClientChannelRemoteObjectReplica* clientChannel READ clientChannel NOTIFY clientChannelChanged)
 public:
     using ServerRemoteObjectReplica::ServerRemoteObjectReplica;
-
-    ~ServerReplica();
 
     QString clientName() const;
     ClientChannelRemoteObjectReplica* clientChannel();
@@ -30,5 +30,5 @@ private:
 
     QString m_clientName;
     bool m_signalsConnected = false;
-    ClientChannelRemoteObjectReplica* m_clientChannel = nullptr;
+    std::unique_ptr<ClientChannelRemoteObjectReplica> m_clientChannel = nullptr;
 };
